@@ -585,36 +585,15 @@
                 <div class="text-center"><button type="submit">Send Message</button></div>
               </form>
               <script>
-                // Your previous form submission handling code
-
-                // Update the error handling to handle the specific response format
-                const handleErrorResponse = async (response) => {
-                  try {
-                    const responseData = await response.json();
-                    if (responseData.ok && responseData.next) {
-                      // Show the success message if the response indicates a successful submission
-                      const successMessage = document.querySelector(".sent-message");
-                      successMessage.style.display = "block";
-                      form.reset(); // Optionally, you can reset the form after successful submission
-                    } else {
-                      // Show an error message if the response is not as expected
-                      throw new Error("Something went wrong with the form submission.");
-                    }
-                  } catch (error) {
-                    console.error(error);
-                    const errorMessageElement = document.querySelector(".error-message");
-                    errorMessageElement.textContent = "Error: " + error.message;
-                  } finally {
-                    // Re-enable the submit button and hide the loading message
-                    submitButton.disabled = false;
-                    loadingMessage.style.display = "none";
-                  }
-                };
-
-                // Modify the submit event listener to handle the error response
+                // Modify the submit event listener to handle the response format
                 form.addEventListener("submit", async (e) => {
                   e.preventDefault();
-                  // ... (rest of your previous code)
+                  const submitButton = document.querySelector('button[type="submit"]');
+                  const loadingMessage = document.querySelector(".loading");
+
+                  // Disable the submit button to prevent multiple submissions
+                  submitButton.disabled = true;
+                  loadingMessage.style.display = "block";
 
                   try {
                     const response = await fetch(form.action, {
@@ -627,11 +606,19 @@
 
                     // Check if the submission was successful (status 200-299)
                     if (response.ok) {
-                      // Call the new error handling function for the specific response format
-                      await handleErrorResponse(response);
+                      const responseData = await response.json();
+                      if (responseData.ok) {
+                        // Show the success message if the response indicates a successful submission
+                        const successMessage = document.querySelector(".sent-message");
+                        successMessage.style.display = "block";
+                        form.reset(); // Optionally, you can reset the form after successful submission
+                      } else {
+                        // Show an error message if the response is not as expected
+                        throw new Error("Something went wrong with the form submission.");
+                      }
                     } else {
-                      // Call the previous error handling function for non-OK responses
-                      await handleNonOKResponse(response);
+                      // Show an error message for non-OK responses
+                      throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
                     }
                   } catch (error) {
                     // Display the error message in case of an error
