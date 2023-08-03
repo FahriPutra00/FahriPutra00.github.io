@@ -587,7 +587,8 @@
               <script>
                 // Modify the submit event listener to handle the response format
                 form.addEventListener("submit", async (e) => {
-                  e.preventDefault();
+                  e.preventDefault(); // Prevent the default form submission and redirection
+
                   const submitButton = document.querySelector('button[type="submit"]');
                   const loadingMessage = document.querySelector(".loading");
 
