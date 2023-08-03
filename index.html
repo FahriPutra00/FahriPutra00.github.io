@@ -580,7 +580,7 @@
                 <div class="my-3">
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                  <div class="success-message" style="display: none">Your message has been sent. Thank you!</div>
                 </div>
                 <div class="text-center"><button type="submit">Send Message</button></div>
               </form>
@@ -609,9 +609,9 @@
                       const responseData = await response.json();
                       if (responseData.ok) {
                         // Show the success message if the response indicates a successful submission
-                        const successMessage = document.querySelector(".sent-message");
-                        successMessage.style.display = "block";
-                        form.reset(); // Optionally, you can reset the form after successful submission
+                        const successMessage = document.querySelector(".success-message");
+                        successMessage.style.display = "block"; // Display the success message
+                        form.style.display = "none"; // Hide the form after successful submission
                       } else {
                         // Show an error message if the response is not as expected
                         throw new Error("Something went wrong with the form submission.");
