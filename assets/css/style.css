@@ -478,7 +478,7 @@ section {
 # Akills
 --------------------------------------------------------------*/
 .skills .progress {
-  height: 60px;
+  height: 120px;
   display: block;
   background: none;
   border-radius: 0;
@@ -492,6 +492,7 @@ section {
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   color: #45505b;
+  font-size: 15px;
 }
 
 .skills .progress .skill .val {
