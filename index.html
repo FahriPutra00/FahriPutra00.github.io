@@ -663,8 +663,8 @@
     <script src="assets/js/main.js"></script>
   </body>
   <script>
-    var form = document.getElementById("my-form");
-    var successMessage = document.querySelector(".success-message");
+    const form = document.getElementById("my-form");
+    const successMessage = document.querySelector(".success-message");
 
     async function handleSubmit(event) {
       event.preventDefault();
@@ -687,7 +687,8 @@
         });
 
         if (response.ok) {
-          // Show the success message if the response indicates a successful submission
+          // Hide the loading message and show the success message
+          loadingMessage.style.display = "none";
           successMessage.style.display = "block";
           form.reset(); // Optionally, you can reset the form after successful submission
         } else {
@@ -703,9 +704,9 @@
         errorMessage.textContent = "Oops! There was a problem submitting your form.";
         errorMessage.style.display = "block";
       } finally {
-        // Re-enable the submit button and hide the loading message
+        // Re-enable the submit button
         submitButton.disabled = false;
-        loadingMessage.style.display = "none";
+        loadingMessage.style.display = "none"; // Ensure loading is hidden
       }
     }
 
